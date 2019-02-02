@@ -1,6 +1,5 @@
 server:
   user: http://120.24.5.178:7200
-
 spring:
   # REDIS (RedisProperties)
   redis:
@@ -12,3 +11,18 @@ spring:
     port: 6379
     # Redis服务器连接密码（默认为空）
     password: 071268
+
+  datasource:
+        druid:
+          url: jdbc:mysql://39.96.63.135:3306/housingmanagement_test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+          username: hawk
+          password: 123456Aa?
+          initial-size: 1
+          min-idle: 1
+          max-active: 20
+          test-on-borrow: true
+          # MySQL 8.x: com.mysql.cj.jdbc.Driver MYSQL 5.x : com.mysql.jdbc.Driver
+          driver-class-name: com.mysql.jdbc.Driver
+#mybatis整合
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

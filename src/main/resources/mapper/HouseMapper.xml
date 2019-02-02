@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hawkbear.housingmanagement.mapper.HouseMapper">
+  <resultMap id="BaseResultMap" type="com.hawkbear.housingmanagement.pojo.House">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="area" jdbcType="INTEGER" property="area" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="type_image" jdbcType="VARCHAR" property="typeImage" />
+    <result column="price" jdbcType="BIGINT" property="price" />
+    <result column="seller" jdbcType="BIGINT" property="seller" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+</mapper>
