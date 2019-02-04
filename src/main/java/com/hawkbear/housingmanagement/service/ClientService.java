@@ -10,6 +10,7 @@ import com.hawkbear.housingmanagement.holder.ProjectHolder;
 import com.hawkbear.housingmanagement.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class ClientService {
     @Resource(name = "stringRedisTemplate")
     private StringRedisTemplate template;
 
-    @Resource
+    @Autowired
     private UserCenterClient client;
 
     public void genProjectInfo() {
