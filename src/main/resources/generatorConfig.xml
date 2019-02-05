@@ -9,7 +9,7 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.hawkbear.housingmanagement.data.MyMapper"/>
+            <property name="mappers" value="com.hawkbear.housingmanagement.mapper.MyMapper"/>
         </plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -19,7 +19,7 @@
         </jdbcConnection>
 
         <!-- 对于生成的pojo所在包 -->
-        <javaModelGenerator targetPackage="com.hawkbear.housingmanagement.pojo" targetProject="src/main/java"/>
+        <javaModelGenerator targetPackage="com.hawkbear.housingmanagement.data.pojo" targetProject="src/main/java"/>
 
 		<!-- 对于生成的mapper所在目录 -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>

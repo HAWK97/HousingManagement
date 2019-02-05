@@ -2,7 +2,7 @@ package com.hawkbear.housingmanagement.service;
 
 import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.data.vo.SearchVo;
-import com.hawkbear.housingmanagement.pojo.House;
+import com.hawkbear.housingmanagement.data.pojo.House;
 
 public interface HouseService {
 

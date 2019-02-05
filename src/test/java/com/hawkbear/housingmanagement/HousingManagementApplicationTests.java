@@ -1,7 +1,7 @@
 package com.hawkbear.housingmanagement;
 
+import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.mapper.HouseMapper;
-import com.hawkbear.housingmanagement.pojo.House;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

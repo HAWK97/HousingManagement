@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.data.vo.SearchVo;
 import com.hawkbear.housingmanagement.mapper.HouseMapper;
-import com.hawkbear.housingmanagement.pojo.House;
+import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.service.HouseService;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;

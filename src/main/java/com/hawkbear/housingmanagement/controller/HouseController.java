@@ -3,7 +3,7 @@ package com.hawkbear.housingmanagement.controller;
 import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
 import com.hawkbear.housingmanagement.data.vo.SearchVo;
-import com.hawkbear.housingmanagement.pojo.House;
+import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

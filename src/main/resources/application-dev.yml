@@ -1,5 +1,5 @@
 server:
-  user: http://120.24.5.178:7200
+  user: usercenter.stalary.com
 
 spring:
   # REDIS (RedisProperties)

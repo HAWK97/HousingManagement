@@ -1,4 +1,4 @@
-package com.hawkbear.housingmanagement.pojo;
+package com.hawkbear.housingmanagement.data.pojo;
 
 import java.util.Date;
 import javax.persistence.*;

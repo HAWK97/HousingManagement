@@ -1,9 +1,9 @@
-package com.hawkbear.housingmanagement.pojo;
+package com.hawkbear.housingmanagement.data.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
 
-public class Invitation {
+public class Comment {
     @Id
     private Long id;
 
@@ -15,17 +15,13 @@ public class Invitation {
 
     private Integer status;
 
-    @Column(name = "user_id")
-    private Long userId;
-
     @Column(name = "house_id")
     private Long houseId;
 
-    @Column(name = "seller_id")
-    private Long sellerId;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @Column(name = "invitation_time")
-    private String invitationTime;
+    private String content;
 
     /**
      * @return id
@@ -84,20 +80,6 @@ public class Invitation {
     }
 
     /**
-     * @return user_id
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
      * @return house_id
      */
     public Long getHouseId() {
@@ -112,30 +94,30 @@ public class Invitation {
     }
 
     /**
-     * @return seller_id
+     * @return user_id
      */
-    public Long getSellerId() {
-        return sellerId;
+    public Long getUserId() {
+        return userId;
     }
 
     /**
-     * @param sellerId
+     * @param userId
      */
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**
-     * @return invitation_time
+     * @return content
      */
-    public String getInvitationTime() {
-        return invitationTime;
+    public String getContent() {
+        return content;
     }
 
     /**
-     * @param invitationTime
+     * @param content
      */
-    public void setInvitationTime(String invitationTime) {
-        this.invitationTime = invitationTime;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

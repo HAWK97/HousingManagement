@@ -1,9 +1,9 @@
-package com.hawkbear.housingmanagement.pojo;
+package com.hawkbear.housingmanagement.data.pojo;
 
 import java.util.Date;
 import javax.persistence.*;
 
-public class Comment {
+public class Invitation {
     @Id
     private Long id;
 
@@ -15,13 +15,17 @@ public class Comment {
 
     private Integer status;
 
-    @Column(name = "house_id")
-    private Long houseId;
-
     @Column(name = "user_id")
     private Long userId;
 
-    private String content;
+    @Column(name = "house_id")
+    private Long houseId;
+
+    @Column(name = "seller_id")
+    private Long sellerId;
+
+    @Column(name = "invitation_time")
+    private String invitationTime;
 
     /**
      * @return id
@@ -80,20 +84,6 @@ public class Comment {
     }
 
     /**
-     * @return house_id
-     */
-    public Long getHouseId() {
-        return houseId;
-    }
-
-    /**
-     * @param houseId
-     */
-    public void setHouseId(Long houseId) {
-        this.houseId = houseId;
-    }
-
-    /**
      * @return user_id
      */
     public Long getUserId() {
@@ -108,16 +98,44 @@ public class Comment {
     }
 
     /**
-     * @return content
+     * @return house_id
      */
-    public String getContent() {
-        return content;
+    public Long getHouseId() {
+        return houseId;
     }
 
     /**
-     * @param content
+     * @param houseId
      */
-    public void setContent(String content) {
-        this.content = content;
+    public void setHouseId(Long houseId) {
+        this.houseId = houseId;
+    }
+
+    /**
+     * @return seller_id
+     */
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    /**
+     * @param sellerId
+     */
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    /**
+     * @return invitation_time
+     */
+    public String getInvitationTime() {
+        return invitationTime;
+    }
+
+    /**
+     * @param invitationTime
+     */
+    public void setInvitationTime(String invitationTime) {
+        this.invitationTime = invitationTime;
     }
 }
