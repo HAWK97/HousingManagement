@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.hawkbear.housingmanagement.mapper;
+package com.hawkbear.housingmanagement.data;
 
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
