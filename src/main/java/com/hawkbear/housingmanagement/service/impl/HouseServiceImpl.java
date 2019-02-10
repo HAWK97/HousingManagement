@@ -2,6 +2,7 @@ package com.hawkbear.housingmanagement.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.hawkbear.housingmanagement.data.dto.HouseDto;
 import com.hawkbear.housingmanagement.data.vo.SearchVo;
 import com.hawkbear.housingmanagement.mapper.HouseMapper;
 import com.hawkbear.housingmanagement.data.pojo.House;
@@ -17,6 +18,7 @@ public class HouseServiceImpl implements HouseService {
 
     @Resource
     private HouseMapper houseMapper;
+
 
     @Override
     public PageInfo<House> findAllHouseByPage(int page, int size, SearchVo searchVo) {
@@ -52,5 +54,13 @@ public class HouseServiceImpl implements HouseService {
         List<House> houseList = houseMapper.selectByExample(example);
         PageInfo<House> pageInfo = new PageInfo<>(houseList);
         return pageInfo;
+    }
+
+    @Override
+    public HouseDto findHouseDetail(Long houseId) {
+        HouseDto houseDto = new HouseDto();
+        House house = houseMapper.selectByPrimaryKey(houseId);
+        //TODO   根据userId 找寻用户信息
+        return null;
     }
 }
