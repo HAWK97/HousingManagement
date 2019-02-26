@@ -7,6 +7,7 @@ import com.hawkbear.housingmanagement.data.dto.User;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
 import com.hawkbear.housingmanagement.exception.MyException;
 import com.hawkbear.housingmanagement.holder.ProjectHolder;
+import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -50,14 +51,14 @@ public class ClientService {
 
     public ResponseMessage postUser(User user, String type) {
         ProjectInfo projectInfo = ProjectHolder.get();
-        if (projectInfo == null) {
-            genProjectInfo();
-        }
-        projectInfo = ProjectHolder.get();
         user.setProjectId(projectInfo.getProjectId());
         ResponseMessage<String> response = new ResponseMessage<>();
         if (Constants.REGISTER.equals(type)) {
             response = client.register(projectInfo.getKey(), user);
+        } else if (Constants.LOGIN.equals(type)) {
+            response = client.login(projectInfo.getKey(), user);
+        } else {
+            log.warn("postUser type " + type + " error");
         }
         if (response.isSuccess()) {
             template.opsForValue().set(Constants.getRedisKey(Constants.REDIS_USER_TOKEN, response.getData()), JSONObject.toJSONString(user));
@@ -65,5 +66,25 @@ public class ClientService {
             throw new MyException(response.getCode(), response.getMsg());
         }
         return response;
+    }
+
+    public User getUser(String token) {
+        String userRedisKey = Constants.getRedisKey(Constants.REDIS_USER_TOKEN, token);
+        if (StringUtils.isEmpty(template.opsForValue().get(userRedisKey))) {
+            ProjectInfo projectInfo = ProjectHolder.get();
+            ResponseMessage<User> userResponse = client.getUserInfo(token, projectInfo.getKey());
+            if (userResponse.isSuccess()) {
+                User user = userResponse.getData();
+                template.opsForValue().set(Constants.getRedisKey(Constants.REDIS_USER_TOKEN, token), JSONObject.toJSONString(user));
+                UserHolder.set(user);
+                return user;
+            } else {
+                throw new MyException(userResponse.getCode(), userResponse.getMsg());
+            }
+        } else {
+            User user = JSONObject.parseObject(template.opsForValue().get(userRedisKey), User.class);
+            UserHolder.set(user);
+            return user;
+        }
     }
 }

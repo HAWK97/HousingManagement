@@ -14,7 +14,6 @@ public class MySpringMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-            registry.addInterceptor(loginInterceptor).addPathPatterns("/collection/addColletion")
-                    .addPathPatterns("/invitation/sendInvitation");
+            registry.addInterceptor(loginInterceptor).excludePathPatterns("/swagger-ui.html");
     }
 }

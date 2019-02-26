@@ -10,7 +10,10 @@ import lombok.Getter;
  */
 public enum ResultEnum {
 
-    SYSTEM_ERROR(-999, "系统错误");
+    SYSTEM_ERROR(-999, "系统错误"),
+
+    // 1开头为用户有关的错误
+    NEED_LOGIN(1001, "未登陆");
 
     @Getter
     private Integer code;

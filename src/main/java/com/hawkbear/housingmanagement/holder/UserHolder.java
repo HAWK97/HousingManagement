@@ -16,8 +16,8 @@ public class UserHolder {
         return userThreadLocal.get();
     }
 
-    public static void set(User projectInfo) {
-        userThreadLocal.set(projectInfo);
+    public static void set(User userInfo) {
+        userThreadLocal.set(userInfo);
     }
 
     public static void remove() {
