@@ -70,7 +70,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private String getAuthHeader(HttpServletRequest request) {
         String authHeader = request.getHeader(Constants.Authorization);
-        log.info("authHeader" + authHeader);
+        log.info("authHeader：" + authHeader);
         return authHeader;
     }
 

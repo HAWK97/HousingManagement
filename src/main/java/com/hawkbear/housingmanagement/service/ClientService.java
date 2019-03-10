@@ -87,4 +87,14 @@ public class ClientService {
             return user;
         }
     }
+
+    public User getUser(Long userId) {
+        ProjectInfo projectInfo = ProjectHolder.get();
+        ResponseMessage<User> response = client.getUserInfoById(userId, projectInfo.getKey(), projectInfo.getProjectId());
+        if (response.isSuccess()) {
+            return response.getData();
+        } else {
+            throw new MyException(response.getCode(), response.getMsg());
+        }
+    }
 }

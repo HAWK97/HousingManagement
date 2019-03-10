@@ -65,4 +65,17 @@ public interface UserCenterClient {
     ResponseMessage<User> getUserInfo(
             @RequestParam(name = "token") String token,
             @RequestParam(name = "key") String key);
+
+    /**
+     * @method getUserInfoById 通过用户 id 获取用户信息
+     * @param userId 用户 id
+     * @param key 项目密钥
+     * @param projectId 项目 id
+     * @return
+     **/
+    @GetMapping("/facade/user")
+    ResponseMessage<User> getUserInfoById(
+            @RequestParam(name = "userId") Long userId,
+            @RequestParam(name = "key") String key,
+            @RequestParam(name = "projectId") Long projectId);
 }
