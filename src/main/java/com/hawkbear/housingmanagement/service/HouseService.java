@@ -2,8 +2,8 @@ package com.hawkbear.housingmanagement.service;
 
 import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.data.dto.HouseDto;
-import com.hawkbear.housingmanagement.data.vo.SearchVo;
 import com.hawkbear.housingmanagement.data.pojo.House;
+import com.hawkbear.housingmanagement.data.vo.SearchVo;
 
 public interface HouseService {
 
@@ -21,5 +21,13 @@ public interface HouseService {
      * @return
      */
     HouseDto findHouseDetail(Long houseId);
+
+    /**
+     * 分页查找所有 正常状态房屋
+     * @param page
+     * @param size
+     * @return
+     */
+    PageInfo<House> findAllNormalHouseByPage(int page, int size);
 
 }

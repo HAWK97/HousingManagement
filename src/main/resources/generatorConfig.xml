@@ -35,7 +35,7 @@
         </table>
         <table tableName="house">
         </table>
-        <table tableName="house_img">
+        <table tableName="img">
         </table>
         <table tableName="invitation">
         </table>

@@ -22,6 +22,11 @@ public class Constants {
     public static final String LOGIN = "login";
     public static final String LOGOUT = "logout";
 
+    //房屋状态
+    public static final Integer HOUSE_NORMAL = 1;
+    public static final Integer HOUSE_SELL = 2;
+    public static final Integer HOUSE_RENTED =3;
+
     public static final String Authorization = "Authorization";
     
     private static final String SPLIT = ":";

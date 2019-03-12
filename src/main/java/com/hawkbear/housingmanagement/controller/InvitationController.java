@@ -1,6 +1,9 @@
 package com.hawkbear.housingmanagement.controller;
 
+import com.hawkbear.housingmanagement.annotation.LoginRequired;
+import com.hawkbear.housingmanagement.data.dto.User;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
+import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.service.ClientService;
 import com.hawkbear.housingmanagement.service.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +25,16 @@ public class InvitationController {
 
     /**
      * 发送邀请 需登陆
-     * @param userId
      * @param sellerId
      * @param houseId
      * @param time
      * @return
      */
+    @LoginRequired
     @GetMapping("sendInvitation")
-    public ResponseMessage sendInvitation(Long userId, Long sellerId, Long houseId, String time){
-        //TODO  userId 由后端服务器获取
-        if (invitationService.sendInvitation(userId, sellerId, houseId, time) == 1)
+    public ResponseMessage sendInvitation( Long sellerId, Long houseId, String time){
+        User user = UserHolder.get();
+        if (invitationService.sendInvitation(user.getId(), sellerId, houseId, time) == 1)
             return ResponseMessage.successMessage();
         else
             return ResponseMessage.failedMessage();

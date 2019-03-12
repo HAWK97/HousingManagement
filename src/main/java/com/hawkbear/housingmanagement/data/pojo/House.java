@@ -1,8 +1,7 @@
 package com.hawkbear.housingmanagement.data.pojo;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.util.Date;
+import javax.persistence.*;
 
 public class House {
     @Id
@@ -14,7 +13,6 @@ public class House {
     @Column(name = "update_time")
     private Date updateTime;
 
-    // 1,正常  2，删除， 3，已出租
     private Integer status;
 
     private String address;

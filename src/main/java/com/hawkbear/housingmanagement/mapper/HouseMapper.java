@@ -4,5 +4,4 @@ import com.hawkbear.housingmanagement.data.MyMapper;
 import com.hawkbear.housingmanagement.data.pojo.House;
 
 public interface HouseMapper extends MyMapper<House> {
-
 }
