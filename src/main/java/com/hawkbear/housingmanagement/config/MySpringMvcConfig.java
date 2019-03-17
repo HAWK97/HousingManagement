@@ -12,6 +12,7 @@ public class MySpringMvcConfig implements WebMvcConfigurer {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
             registry.addInterceptor(loginInterceptor).excludePathPatterns("/swagger-ui.html");
