@@ -1,14 +1,13 @@
 package com.hawkbear.housingmanagement.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.data.dto.HouseDto;
+import com.hawkbear.housingmanagement.data.dto.SearchDto;
 import com.hawkbear.housingmanagement.data.dto.User;
-import com.hawkbear.housingmanagement.data.pojo.Img;
-import com.hawkbear.housingmanagement.data.vo.SearchVo;
-import com.hawkbear.housingmanagement.mapper.HouseMapper;
 import com.hawkbear.housingmanagement.data.pojo.House;
+import com.hawkbear.housingmanagement.data.pojo.Img;
+import com.hawkbear.housingmanagement.mapper.HouseMapper;
 import com.hawkbear.housingmanagement.mapper.ImgMapper;
 import com.hawkbear.housingmanagement.service.ClientService;
 import com.hawkbear.housingmanagement.service.HouseService;
@@ -33,37 +32,32 @@ public class HouseServiceImpl implements HouseService {
     @Resource
     private ImgMapper imgMapper;
 
+
     @Override
-    public PageInfo<House> findAllHouseByPage(int page, int size, SearchVo searchVo) {
+    public PageInfo<House> findAllHouseByPage(int page, int size, SearchDto searchDto) {
         PageHelper.startPage(page,size);
         Example example = new Example(House.class);
-        if (searchVo.getHighArea() != null){
-            example.createCriteria().andLessThan("area",searchVo.getHighArea());
+        if (searchDto.getHighArea() != null){
+            example.createCriteria().andLessThan("area",searchDto.getHighArea());
         }
-        if (searchVo.getHighPrice() != null){
-            example.createCriteria().andLessThan("price",searchVo.getHighPrice());
+        if (searchDto.getAddress() != null){
+            example.createCriteria().andLike("address","%"+searchDto.getAddress()+"%");
         }
-        if (searchVo.getLowArea() != null){
-            example.createCriteria().andGreaterThan("area",searchVo.getLowArea());
+        if (searchDto.getHighPrice() != null){
+            example.createCriteria().andLessThan("price",searchDto.getHighPrice());
         }
-        if (searchVo.getLowPrice() != null){
-            example.createCriteria().andGreaterThan("price",searchVo.getLowPrice());
+        if (searchDto.getLowArea() != null){
+            example.createCriteria().andGreaterThan("area",searchDto.getLowArea());
         }
-        if (searchVo.getType() != null){
-            example.createCriteria().andEqualTo("type",searchVo.getType());
+        if (searchDto.getLowPrice() != null){
+            example.createCriteria().andGreaterThan("price",searchDto.getLowPrice());
         }
-        if (searchVo.isOrderByArea() == false){
-            example.setOrderByClause("area asc");
-        }else {
-            example.setOrderByClause("area desc");
+        if (searchDto.getType() != null){
+            example.createCriteria().andEqualTo("type",searchDto.getType());
         }
-        if (searchVo.isOrderByPrice() == false){
-            example.setOrderByClause("price asc");
-        }else {
-            example.setOrderByClause("price desc");
-        }
+
         //房屋处于正常状态1 ，2为删除，3为出租
-        example.createCriteria().andNotEqualTo("status",Constants.HOUSE_NORMAL);
+        example.createCriteria().andEqualTo("status",Constants.HOUSE_NORMAL);
         List<House> houseList = houseMapper.selectByExample(example);
         PageInfo<House> pageInfo = new PageInfo<>(houseList);
         return pageInfo;
