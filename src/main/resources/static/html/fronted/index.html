@@ -1,28 +1,21 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dell
-  Date: 2018/12/26
-  Time: 15:41
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>å¥½æˆ¿é€š</title>
-    <!-- æœ€æ–°ç‰ˆæœ¬çš„ Bootstrap æ ¸å¿ƒ CSS æ–‡ä»¶ -->
+    <title>ºÃ·¿Í¨</title>
+    <!-- ×îĞÂ°æ±¾µÄ Bootstrap ºËĞÄ CSS ÎÄ¼ş -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!-- å¯é€‰çš„ Bootstrap ä¸»é¢˜æ–‡ä»¶ï¼ˆä¸€èˆ¬ä¸ç”¨å¼•å…¥ï¼‰ -->
+    <!-- ¿ÉÑ¡µÄ Bootstrap Ö÷ÌâÎÄ¼ş£¨Ò»°ã²»ÓÃÒıÈë£© -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <script src="<%=request.getContextPath()%>/js/jquery-3.1.1.min.js"></script>
-    <!-- æœ€æ–°çš„ Bootstrap æ ¸å¿ƒ JavaScript æ–‡ä»¶ -->
+    <script src="../../js/jquery-3.1.1.min.js"></script>
+    <!-- ×îĞÂµÄ Bootstrap ºËĞÄ JavaScript ÎÄ¼ş -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <script src="<%=request.getContextPath()%>/js/template.js"></script>
+    <script src="../../js/template.js"></script>
+    <script src="../../js/global.js/"></script>
 </head>
 <style>
     * {
@@ -68,47 +61,47 @@
 <body>
 <div style="margin: 0 auto;width: 1000px">
     <header class="btn-info">
-        <span>å¥½æˆ¿é€š</span>
-        <!--TODO  shuguang å†™-->
-        <span style="float: right">æ³¨å†Œ</span>
-        <span style="float: right">ç™»é™†&nbsp;</span>
+        <span>ºÃ·¿Í¨</span>
+        <!--TODO  shuguang Ğ´-->
+        <span style="float: right">×¢²á</span>
+        <span style="float: right">µÇÂ½&nbsp;</span>
     </header>
     <div>
         <div class="search">
-            <div id="search_item01" class="search_item">åœ°å€:
-                <span class="search_span search_span_all location" onclick="searchWithAddress(this)">å…¨éƒ¨</span>
-                <span class="search_span location" onclick="searchWithAddress(this)">åŒ—äº¬1</span>
-                <span class="search_span location" onclick="searchWithAddress(this)">åŒ—äº¬2</span>
-                <span class="search_span location" onclick="searchWithAddress(this)">åŒ—äº¬3</span>
+            <div id="search_item01" class="search_item">µØÖ·:
+                <span class="search_span search_span_all location" onclick="searchWithAddress(this)">È«²¿</span>
+                <span class="search_span location" onclick="searchWithAddress(this)">±±¾©1</span>
+                <span class="search_span location" onclick="searchWithAddress(this)">±±¾©2</span>
+                <span class="search_span location" onclick="searchWithAddress(this)">±±¾©3</span>
             </div>
-            <div class="search_item">ä»·æ ¼:
-                <span class="search_span search_span_all price" onclick="searchWithPrice(this)">å…¨éƒ¨</span>
-                <span class="search_span price" onclick="searchWithPrice(this)">500-800</span>å…ƒ
-                <span class="search_span price" onclick="searchWithPrice(this)">500-800</span>å…ƒ
-                <span class="search_span price" onclick="searchWithPrice(this)">500-800</span>å…ƒ
+            <div class="search_item">¼Û¸ñ:
+                <span class="search_span search_span_all price" onclick="searchWithPrice(this)">È«²¿</span>
+                <span class="search_span price" onclick="searchWithPrice(this)">500-800</span>Ôª
+                <span class="search_span price" onclick="searchWithPrice(this)">500-800</span>Ôª
+                <span class="search_span price" onclick="searchWithPrice(this)">500-800</span>Ôª
             </div>
-            <div class="search_item">å¤§å°:
-                <span class="search_span search_span_all square" onclick="searchWithSquare(this)">å…¨éƒ¨</span>
+            <div class="search_item">´óĞ¡:
+                <span class="search_span search_span_all square" onclick="searchWithSquare(this)">È«²¿</span>
                 <span class="search_span  square" onclick="searchWithSquare(this)">10-20</span>m2
                 <span class="search_span  square" onclick="searchWithSquare(this)">20-40</span>m2
                 <span class="search_span  square" onclick="searchWithSquare(this)">40-80</span>m2
             </div>
-            <div class="search_item">æˆ·å‹:
-                <span class="search_span search_span_all type" onclick="searchWithType(this)">å…¨éƒ¨</span>
-                <span class="search_span type" onclick="searchWithType(this)">ä¸€å®¤</span>
-                <span class="search_span type" onclick="searchWithType(this)">ä¸€å®¤</span>
-                <span class="search_span type" onclick="searchWithType(this)">ä¸€å®¤</span>
+            <div class="search_item">»§ĞÍ:
+                <span class="search_span search_span_all type" onclick="searchWithType(this)">È«²¿</span>
+                <span class="search_span type" onclick="searchWithType(this)">Ò»ÊÒ</span>
+                <span class="search_span type" onclick="searchWithType(this)">Ò»ÊÒ</span>
+                <span class="search_span type" onclick="searchWithType(this)">Ò»ÊÒ</span>
             </div>
         </div>
-        <!--TODO  æ¸²æŸ“æ¨¡æ¿-->
+        <!--TODO  äÖÈ¾Ä£°å-->
         <div class="img-list" id="imgListDiv">
             <script id="imgScript" type="text/html">
-                <!--åª’ä½“å¯¹è±¡å¼€å§‹-->
+                <!--Ã½Ìå¶ÔÏó¿ªÊ¼-->
                 {{each data.list}}
                 <div class="media" style="width: 700px;float: left">
                     <div class="media-left media-middle">
                         <a href="#">
-                            <img class="media-object" src="<%=request.getContextPath()%>/img/test_house.jpg" alt="æˆ¿å±‹">
+                            <img class="media-object" src="../../img/test_house.jpg" alt="·¿Îİ">
                         </a>
                     </div>
                     <div class="media-body" style="padding-left: 20px">
@@ -119,21 +112,21 @@
                 </div>
                 <div style="float: left;padding: 40px;height: 180px">
                     <div>
-                        <span style="font-size: 20px;font-weight: bold;color: red">{{$value.price}}å…ƒ/æœˆ</span>
+                        <span style="font-size: 20px;font-weight: bold;color: red">{{$value.price}}Ôª/ÔÂ</span>
                     </div>
                 </div>
                 <div style="clear: left"></div>
                 {{/each}}
-                <!--åª’ä½“å¯¹è±¡ç»“æŸ-->
+                <!--Ã½Ìå¶ÔÏó½áÊø-->
             </script>
         </div>
     </div>
     <form id="search_form" style="display: none">
-        åœ°å€ï¼š<input type="text" value="å…¨éƒ¨" name="address" id="address">
-        ä»·æ ¼ï¼š<input type="text" value="å…¨éƒ¨" name="priceRegion" id="priceRegion">
-        å¤§å°: <input type="text" value="å…¨éƒ¨" name="squraRegion" id="squraRegion">
-        æˆ·å‹:<input type="text" value="å…¨éƒ¨" name="type" id="type">
-        <input type="submit" value="æäº¤">
+        µØÖ·£º<input type="text" value="È«²¿" name="address" id="address">
+        ¼Û¸ñ£º<input type="text" value="È«²¿" name="priceRegion" id="priceRegion">
+        ´óĞ¡: <input type="text" value="È«²¿" name="squraRegion" id="squraRegion">
+        »§ĞÍ:<input type="text" value="È«²¿" name="type" id="type">
+        <input type="submit" value="Ìá½»">
     </form>
 </div>
 
@@ -141,12 +134,12 @@
 
 
     $(function () {
-        //åˆå§‹åŒ–æˆ¿å±‹å›¾ç‰‡åˆ—è¡¨
+        //³õÊ¼»¯·¿ÎİÍ¼Æ¬ÁĞ±í
         initImgList();
 
-        //æ·»åŠ ç‚¹å‡»äº‹ä»¶
+        //Ìí¼Óµã»÷ÊÂ¼ş
         /**
-         * åˆå§‹åŒ–æˆ¿å±‹å›¾ç‰‡åˆ—è¡¨
+         * ³õÊ¼»¯·¿ÎİÍ¼Æ¬ÁĞ±í
          */
         function initImgList() {
             search();
@@ -196,20 +189,20 @@
     }
 
     /**
-     * æœç´¢æ“ä½œ
+     * ËÑË÷²Ù×÷
      */
     function search() {
 
         var dom = $("#search_form")[0];
         var formData = new FormData(dom);
         $.ajax({
-            url: "<%=request.getContextPath()%>/house/findHouseBySearchVo",
+            url: window.globalConfig.baseUrl+"/house/findHouseBySearchVo",
             type: "POST",
             data: formData,
-            cache: false, // ä¸ç¼“å­˜æ•°æ®
-            processData: false, // ä¸å¤„ç†æ•°æ®
-            contentType: false, // ä¸è®¾ç½®å†…å®¹ç±»å‹
-            success: function (data) { //æˆåŠŸå›è°ƒ
+            cache: false, // ²»»º´æÊı¾İ
+            processData: false, // ²»´¦ÀíÊı¾İ
+            contentType: false, // ²»ÉèÖÃÄÚÈİÀàĞÍ
+            success: function (data) { //³É¹¦»Øµ÷
                 var html = template("imgScript", data);
                 document.getElementById("imgListDiv").innerHTML = html;
             }

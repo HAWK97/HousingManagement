@@ -1,9 +1,9 @@
 package com.hawkbear.housingmanagement.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.hawkbear.housingmanagement.data.dto.SearchDto;
 import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
-import com.hawkbear.housingmanagement.data.dto.SearchDto;
 import com.hawkbear.housingmanagement.data.vo.SearchVo;
 import com.hawkbear.housingmanagement.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,16 @@ public class HouseController {
 
     @Autowired
     private HouseService houseService;
+
+    /**
+     * 根据houseId 返回房屋细节信息
+     * @param houseId
+     * @return
+     */
+    @GetMapping("/toHouseDetail/{id}")
+    public void findHouseById(@PathVariable("id") long houseId){
+        return;
+    }
 
     @PostMapping("/findHouseBySearchVo")
     public ResponseMessage<PageInfo<House>> findHouseBySearchVo(@RequestParam(required = false,defaultValue = "1") int page,

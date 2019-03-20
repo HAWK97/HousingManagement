@@ -5,10 +5,3 @@ spring:
     encoding:
       charset: UTF-8
       enabled: true
-
-  # 指定 jsp 文件路径
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
-
