@@ -1,3 +1,3 @@
 window.globalConfig ={
-    baseUrl : "http://localhost:8082"
-}
+    baseUrl : "http://" + window.location.host
+};
