@@ -16,5 +16,7 @@ public class HouseDto {
 
     private String sellerPhoneNum;
 
+    private String sellerName;
 
+    private Long sellerId;
 }

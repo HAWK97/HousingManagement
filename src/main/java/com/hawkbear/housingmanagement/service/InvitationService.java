@@ -1,6 +1,14 @@
 package com.hawkbear.housingmanagement.service;
 
+import com.hawkbear.housingmanagement.data.dto.InvitationDto;
+import com.hawkbear.housingmanagement.data.vo.InvitationSearchVo;
+
+import java.util.List;
+
 public interface InvitationService {
+
+
+
     /**
      *
      * @param userId 用户id
@@ -9,4 +17,12 @@ public interface InvitationService {
      * @param time 邀请时间
      */
     int  sendInvitation(Long userId, Long sellerId, Long houseId, String time);
+
+
+    /**
+     * 多条件查询invitation
+     * @param searchVo
+     * @return
+     */
+    List<InvitationDto> getInvitationBySearchVo(InvitationSearchVo searchVo);
 }

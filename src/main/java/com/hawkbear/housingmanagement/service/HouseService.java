@@ -2,10 +2,22 @@ package com.hawkbear.housingmanagement.service;
 
 import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.data.dto.HouseDto;
-import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.data.dto.SearchDto;
+import com.hawkbear.housingmanagement.data.pojo.House;
 
 public interface HouseService {
+
+
+    /**
+     * 添加房子
+     * @param price
+     * @param desc
+     * @param address
+     * @param area
+     * @param type
+     * @param imgUrl
+     */
+    Long addHouse(Long price,String desc,String address, Integer area, String type, String imgUrl);
 
 
     /**

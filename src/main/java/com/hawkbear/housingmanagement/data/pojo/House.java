@@ -1,10 +1,14 @@
 package com.hawkbear.housingmanagement.data.pojo;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
-import javax.persistence.*;
 
 public class House {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "create_time")
@@ -183,4 +187,5 @@ public class House {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

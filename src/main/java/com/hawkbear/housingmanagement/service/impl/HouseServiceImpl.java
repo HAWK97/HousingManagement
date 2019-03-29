@@ -7,6 +7,7 @@ import com.hawkbear.housingmanagement.data.dto.SearchDto;
 import com.hawkbear.housingmanagement.data.dto.User;
 import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.data.pojo.Img;
+import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.mapper.HouseMapper;
 import com.hawkbear.housingmanagement.mapper.ImgMapper;
 import com.hawkbear.housingmanagement.service.ClientService;
@@ -18,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,6 +34,32 @@ public class HouseServiceImpl implements HouseService {
     @Resource
     private ImgMapper imgMapper;
 
+
+    /**
+     * 添加房屋
+     * @param price
+     * @param desc
+     * @param address
+     * @param area
+     * @param type
+     * @param imgUrl
+     */
+    @Override
+    public Long addHouse(Long price,String desc, String address, Integer area, String type, String imgUrl) {
+        House house = new House();
+        house.setCreateTime(new Date());
+        house.setUpdateTime(new Date());
+        house.setStatus(Constants.HOUSE_NORMAL);
+        house.setAddress(address);
+        house.setArea(area);
+        house.setType(type);
+        house.setTypeImage(imgUrl);
+        house.setPrice(price);
+        house.setSeller(UserHolder.get().getId());
+        house.setDescription(desc);
+        houseMapper.insert(house);
+        return house.getId();
+    }
 
     @Override
     public PageInfo<House> findAllHouseByPage(int page, int size, SearchDto searchDto) {
@@ -63,6 +91,11 @@ public class HouseServiceImpl implements HouseService {
         return pageInfo;
     }
 
+    /**
+     * 根据房子id获取房屋信息
+     * @param houseId
+     * @return
+     */
     @Override
     public HouseDto findHouseDetail(Long houseId) {
         HouseDto houseDto = new HouseDto();
@@ -72,12 +105,14 @@ public class HouseServiceImpl implements HouseService {
         houseDto.setSellerPhoneNum(user.getPhone());
         houseDto.setTitleImg(house.getTypeImage());
         Example example = new Example(Img.class);
-        example.createCriteria().andEqualTo("house_id",house.getId());
+        example.createCriteria().andEqualTo("id",house.getId());
         List<Img> imgList = imgMapper.selectByExample(example);
         List<String> stringList = new ArrayList<>();
         for (Img img:imgList)
             stringList.add(img.getImageUrl());
         houseDto.setImgList(stringList);
+        houseDto.setSellerName(user.getNickname());
+        houseDto.setSellerId(user.getId());
         return houseDto;
     }
 
