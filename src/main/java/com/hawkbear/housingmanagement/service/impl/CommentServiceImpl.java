@@ -48,6 +48,8 @@ public class CommentServiceImpl implements CommentService {
         for (Comment comment : commentList){
             User user = clientService.getUser(comment.getUserId());
             CommentDto commentDto = new CommentDto();
+            //TODO 用户头像
+            commentDto.setUserProfile("../../img/test_house.jpg");
             commentDto.setComment(comment);
             commentDto.setNickname(user.getNickname());
             commentDtoList.add(commentDto);

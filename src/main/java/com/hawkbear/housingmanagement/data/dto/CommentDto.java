@@ -14,4 +14,5 @@ public class CommentDto {
 
     private String nickname;       //用户姓名
 
+    private String userProfile;  //用户头像
 }

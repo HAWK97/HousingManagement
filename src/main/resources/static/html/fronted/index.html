@@ -60,12 +60,17 @@
 </style>
 <body>
 <div style="margin: 0 auto;width: 1000px">
-    <header class="btn-info">
-        <span>好房通</span>
-        <!--TODO  shuguang 写-->
-        <span style="float: right">注册</span>
-        <span style="float: right">登陆&nbsp;</span>
-    </header>
+    <nav class="navbar" style="height: 120px; background-color: #32363a">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="../fronted/index.html">
+                        <img src="../../img/brand.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
     <div>
         <div class="search">
             <div id="search_item01" class="search_item">地址:
@@ -101,7 +106,7 @@
                 <div class="media" style="width: 700px;float: left">
                     <div class="media-left media-middle">
                         <a href="houseDetail.html?id={{$value.id}}">
-                            <img class="media-object" src="{{$value.img}}" alt="房屋">
+                            <img class="media-object" src="{{$value.typeImage}}" alt="房屋">
                         </a>
                     </div>
                     <div class="media-body" style="padding-left: 20px">
@@ -196,7 +201,7 @@
         var dom = $("#search_form")[0];
         var formData = new FormData(dom);
         $.ajax({
-            url: window.globalConfig.baseUrl+"/house/findHouseBySearchVo",
+            url: window.globalConfig.baseUrl + "/house/findHouseBySearchVo",
             type: "POST",
             data: formData,
             cache: false, // 不缓存数据

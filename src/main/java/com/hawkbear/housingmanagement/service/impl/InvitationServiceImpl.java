@@ -1,14 +1,22 @@
 package com.hawkbear.housingmanagement.service.impl;
 
 import com.hawkbear.housingmanagement.data.dto.InvitationDto;
+import com.hawkbear.housingmanagement.data.dto.User;
 import com.hawkbear.housingmanagement.data.pojo.Invitation;
 import com.hawkbear.housingmanagement.data.vo.InvitationSearchVo;
 import com.hawkbear.housingmanagement.mapper.InvitationMapper;
+import com.hawkbear.housingmanagement.service.ClientService;
 import com.hawkbear.housingmanagement.service.InvitationService;
 import com.hawkbear.housingmanagement.utils.Constants;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +25,9 @@ public class InvitationServiceImpl implements InvitationService {
 
     @Resource
     private InvitationMapper invitationMapper;
+
+    @Autowired
+    private ClientService clientService;
 
     @Override
     public int sendInvitation(Long userId, Long sellerId, Long houseId, String time) {
@@ -32,9 +43,40 @@ public class InvitationServiceImpl implements InvitationService {
         return  num;
     }
 
-    //TODO   多条件查询用户邀请函信息
+    /**
+     * 多条件查询用户邀请函信息
+     * @param searchVo
+     * @return
+     * @throws ParseException
+     */
     @Override
-    public List<InvitationDto> getInvitationBySearchVo(InvitationSearchVo searchVo) {
-        return null;
+    public List<InvitationDto> getInvitationBySearchVo(InvitationSearchVo searchVo) throws ParseException {
+        Example example = new Example(Invitation.class);
+        if (StringUtils.isNotBlank(searchVo.getHouseId())){
+            example.createCriteria().andEqualTo("house_id",Integer.valueOf(searchVo.getHouseId()));
+        }
+        if (StringUtils.isNotBlank(searchVo.getSellerId())){
+            example.createCriteria().andEqualTo("seller_id",Integer.valueOf(searchVo.getSellerId()));
+        }
+        if (StringUtils.isNotBlank(searchVo.getStatus())){
+            example.createCriteria().andEqualTo("status",Integer.valueOf(searchVo.getStatus()));
+        }
+        if (StringUtils.isNotBlank(searchVo.getCreateDateTime())){
+            example.createCriteria().andEqualTo("create_time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(searchVo.getCreateDateTime()));
+        }
+        List<Invitation> invitationList = invitationMapper.selectByExample(example);
+        List<InvitationDto> res = new ArrayList<>();
+        for (Invitation invitation : invitationList){
+            InvitationDto invitationDto = new InvitationDto();
+            invitationDto.setId(invitation.getId());
+            invitationDto.setInvitationTime(invitation.getCreateTime());
+            invitationDto.setStatus(invitation.getStatus());
+            User user = clientService.getUser(invitation.getUserId());
+            invitationDto.setNickName(user.getNickname());
+            invitationDto.setPhone(user.getPhone());
+            res.add(invitationDto);
+        }
+        return  res;
     }
+
 }

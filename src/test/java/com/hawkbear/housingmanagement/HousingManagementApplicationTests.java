@@ -1,7 +1,6 @@
 package com.hawkbear.housingmanagement;
 
-import com.hawkbear.housingmanagement.data.pojo.House;
-import com.hawkbear.housingmanagement.mapper.HouseMapper;
+import com.hawkbear.housingmanagement.service.HouseService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class HousingManagementApplicationTests {
 
     @Autowired
-    private HouseMapper houseMapper;
+    private HouseService houseService;
 
     @Test
-    public void contextLoads() {
-        House house = new House();
-        house.setDescription("hahah");
-        houseMapper.insert(house);
+    public void test01() {
+        houseService.addHouse(10L, "test", "test", 1, "test", "test");
     }
 
 }

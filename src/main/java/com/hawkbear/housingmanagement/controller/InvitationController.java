@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/invitation")
@@ -30,9 +31,12 @@ public class InvitationController {
      */
     @LoginRequired
     @PostMapping("getInvitation")
-    public ResponseMessage getInvitation(InvitationSearchVo invitationSearchVo){
-            //TODO    多条件查询邀请函信息
-        return null;
+    public ResponseMessage getInvitation(InvitationSearchVo invitationSearchVo)  {
+        try {
+            return ResponseMessage.successMessage(invitationService.getInvitationBySearchVo(invitationSearchVo));
+        } catch (ParseException e) {
+            return ResponseMessage.failedMessage("传来日期格式有误");
+        }
     }
 
 

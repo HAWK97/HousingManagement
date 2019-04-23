@@ -3,6 +3,7 @@ package com.hawkbear.housingmanagement.service;
 import com.hawkbear.housingmanagement.data.dto.InvitationDto;
 import com.hawkbear.housingmanagement.data.vo.InvitationSearchVo;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface InvitationService {
@@ -24,5 +25,5 @@ public interface InvitationService {
      * @param searchVo
      * @return
      */
-    List<InvitationDto> getInvitationBySearchVo(InvitationSearchVo searchVo);
+    List<InvitationDto> getInvitationBySearchVo(InvitationSearchVo searchVo) throws ParseException;
 }

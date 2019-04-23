@@ -15,6 +15,7 @@ import com.hawkbear.housingmanagement.service.HouseService;
 import com.hawkbear.housingmanagement.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class HouseServiceImpl implements HouseService {
 
     @Resource
@@ -57,7 +59,9 @@ public class HouseServiceImpl implements HouseService {
         house.setPrice(price);
         house.setSeller(UserHolder.get().getId());
         house.setDescription(desc);
-        houseMapper.insert(house);
+        int i = houseMapper.insert(house);
+        if (i == 1)
+        throw new RuntimeException("运行错误");
         return house.getId();
     }
 
@@ -113,6 +117,8 @@ public class HouseServiceImpl implements HouseService {
         houseDto.setImgList(stringList);
         houseDto.setSellerName(user.getNickname());
         houseDto.setSellerId(user.getId());
+        //TODO   用户头像
+        houseDto.setUserProfile("../../img/test_house.jpg");
         return houseDto;
     }
 

@@ -27,20 +27,28 @@
         padding: 0;
     }
 
+    .interval{
+        margin-top: 20px;
+    }
+
 </style>
 <body>
 <div style="margin: 0 auto;width: 1000px">
-    <header class="btn-info">
-        <span>好房通</span>
-        <!--TODO  shuguang 写-->
-        <span style="float: right">注册</span>
-        <span style="float: right">登陆&nbsp;</span>
-    </header>
+    <nav class="navbar" style="height: 120px; background-color: #32363a">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="../fronted/index.html">
+                        <img src="../../img/brand.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
     <!--TODO  渲染模板-->
     <div id="houseDetailDiv">
         <script type="text/html" id="houseDetailJs">
-            <h1>{{house.address}} {{house.type}} {{house.description}}</h1>
-            <h1 style="color: red">{{house.price}}￥</h1>
+
             <div class="main">
                 <div style="float: left">
                     <!--轮播图开始-->
@@ -77,14 +85,26 @@
                     </div>
                     <!--轮播图结束-->
                 </div>
-                <!--户主信息-->
-                <div style="float: right">
+                <!--房屋详细信息-->
+                <div style="float: right;width: 200px">
                     <!--TODO   获取用户信息 样式改变-->
-                    <h3>昵称：{{sellerName}}</h3>
-                    <h3>电话：{{sellerPhoneNum}}</h3>
+                    <div>
+                        <img src="{{userProfile}}" width="200px" height="200px">
+                    </div>
+                    <div class="interval"><span style="font-size: 20px;color: gray">昵称:</span><span>{{sellerName}}</span></div>
+                    <div class="interval"><span style="color: gray;font-size: 20px">地址:</span>
+                        <span style="color: black;font-size: 18px">{{house.address}}</span></div>
+                    <div class="interval"><span style="color: gray;font-size: 20px">类型:</span>
+                        <span style="color: black;font-size: 18px">{{house.type}}</span></div>
+                    <div class="interval"><span style="color: gray;font-size: 20px">描述:</span>
+                        <span style="color: black;font-size: 18px">{{house.description}}</span></div>
+                    <div  class="interval"><span style="color: gray;font-size: 20px">租金:</span>
+                        <span style="color: red;font-size: 18px">{{house.price}}￥</span></div>
+                    <div class="interval"><span style="font-size: 20px; color: gray">电话</span>{{sellerPhoneNum}}</div>
                     <span style="display: none" id="sellerId">{{sellerId}}</span>
-                    <button class="btn btn-success" onclick="sendInvitation()">发起预约</button>
+                    <button class="btn btn-success btn-block" onclick="sendInvitation()">发起预约</button>
                 </div>
+                <!--房屋详细信息-->
                 <div style="clear: both"></div>
             </div>
         </script>
@@ -93,12 +113,28 @@
     <div id="commentDiv">
         <script type="text/html" id="commentJs">
             {{each data}}
-            <div>{{$value.nickName}}:{{$value.comment.content}} {{$value.comment.createTime}}</div>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{{$value.userProfile}}" width="50px" height="50px">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h6 class="media-heading">{{$value.comment.createTime}}</h6>
+                    {{$value.comment.content}}
+                </div>
+            </div>
             {{/each}}
         </script>
     </div>
-    <input type="text" id="comment" name="comment">
-    <button class="btn btn-success" onclick="sendComment()">发表评论</button>
+    <!--评论列表结束-->
+    <form>
+        <div class="form-group">
+            <label for="comment">评论：</label>
+            <input type="text" class="form-control" id="comment" placeholder="评论">
+        </div>
+        <button class="btn btn-success" onclick="sendComment()" type="submit">发表评论</button>
+    </form>
 </div>
 
 

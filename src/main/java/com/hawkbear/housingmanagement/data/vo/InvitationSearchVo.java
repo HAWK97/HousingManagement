@@ -1,21 +1,22 @@
 package com.hawkbear.housingmanagement.data.vo;
 
-import java.util.Date;
+import lombok.Data;
 
 /**
  * invitation 多条件查询
  * @author xch
  * @since 2019/3/29 16:49
  **/
+@Data
 public class InvitationSearchVo {
 
-    private Integer status;      //邀请item 的状态
+    private String status;      //邀请item 的状态
 
-    private Integer houseId;    //房屋id
+    private String houseId;    //房屋id
 
-    private Date  createDateTime;       //创建时间
+    private String  createDateTime;       //创建时间
 
-    private Integer sellerId;       //卖房人id
+    private String sellerId;       //卖房人id
 
 
 }

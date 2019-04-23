@@ -19,4 +19,6 @@ public class HouseDto {
     private String sellerName;
 
     private Long sellerId;
+
+    private String userProfile; //用户肖像
 }
