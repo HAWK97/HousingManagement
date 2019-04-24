@@ -36,6 +36,9 @@ public class User {
     @ApiModelProperty("邮箱")
     private String email;
 
+    @ApiModelProperty("头像url")
+    private String avatarUrl;
+
     @ApiModelProperty(hidden = true)
     private Long projectId;
 

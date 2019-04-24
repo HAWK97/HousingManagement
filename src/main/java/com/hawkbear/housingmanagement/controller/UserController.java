@@ -31,13 +31,7 @@ public class UserController {
     public ResponseMessage login(@RequestBody User loginUser) {
         ProjectInfo projectInfo = ProjectHolder.get();
         loginUser.setProjectId(projectInfo.getProjectId());
-        ResponseMessage response = clientService.postUser(loginUser, Constants.LOGIN);
-        if (!response.isSuccess()) {
-            return response;
-        }
-        String token = response.getData().toString();
-        User user = clientService.getUser(token);
-        return ResponseMessage.successMessage(user);
+        return clientService.postUser(loginUser, Constants.LOGIN);
     }
 
     @ApiOperation(value = "获取当前用户", notes = "需要登录")

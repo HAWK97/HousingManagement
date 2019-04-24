@@ -9,6 +9,8 @@
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="../../js/template.js"></script>
+    <script src="../../js/common/login.js"></script>
 </head>
 <body>
     <nav class="navbar" style="height: 120px; background-color: #32363a">
@@ -29,26 +31,29 @@
                 <img class="login_img img-rounded" style="width: 750px" src="../../img/login.jpg">
             </div>
             <div class="col-md-4" style="margin-top: 25px; margin-left: 385px; border: 1px solid #ccc; border-radius: 16px">
-                <form>
+                <form onsubmit="return false">
                     <div class="form-group" style="width: 300px; margin-top: 125px; margin-left: 25px">
                         <label for="username">用户名</label>
-                        <input type="text" class="form-control" id="username">
+                        <input type="text" class="form-control" id="username" required>
                     </div>
                     <div class="form-group" style="width: 300px; margin-left: 25px">
                         <label for="password">密码</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="password" required>
                     </div>
                     <div class="form-group" style="margin-left: 25px">
                         <label class="radio-inline">
-                            <input type="radio" value="buyer">买家登录
+                            <input type="radio" value="buyer" checked>买家登录
                         </label>
                         <label class="radio-inline">
                             <input type="radio" value="seller">卖家登录
                         </label>
                     </div>
-                    <div style="margin-bottom: 125px">
-                        <button type="submit" class="btn btn-primary" style="margin-left: 25px">登录</button>
+                    <div class="form-group" style="margin-left: 25px">
+                        <button type="button" class="btn btn-primary" onclick="login()">登录</button>
                         <a href="register.html" style="margin-left: 10px">没有账号？请先注册</a>
+                    </div>
+                    <div style="margin-bottom: 125px; margin-left: 25px">
+                        <span id="error_tips" style="color: red"></span>
                     </div>
                 </form>
             </div>
