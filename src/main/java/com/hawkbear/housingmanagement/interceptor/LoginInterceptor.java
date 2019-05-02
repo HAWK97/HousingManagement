@@ -77,7 +77,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private String getToken(String authHeader) {
         String token = "";
         if (StringUtils.isEmpty(authHeader)) {
-            token = "1f126895c515339f5a7d9cbbbf61443ca8969b44c4a8d3ef6e6cf8eb272738fd";
+            token = "45e9a34092333b04159f92a7df0cf18602243bd570f5c7227d6aba196f466831";
         } else {
             token = authHeader.split(" ")[1];
         }

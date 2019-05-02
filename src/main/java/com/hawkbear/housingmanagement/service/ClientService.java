@@ -61,7 +61,7 @@ public class ClientService {
             log.warn("postUser type " + type + " error");
         }
         if (response.isSuccess()) {
-            template.opsForValue().set(Constants.getRedisKey(Constants.REDIS_USER_TOKEN, response.getData()), JSONObject.toJSONString(user));
+            getUser(response.getData());
         } else {
             throw new MyException(response.getCode(), response.getMsg());
         }

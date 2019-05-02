@@ -1,6 +1,8 @@
 function login() {
     $.ajax({
-        url: "http://" + window.location.host + "/user/login",
+        // TODO 取消注释
+        // url: "http://" + window.location.host + "/user/login",
+        url: "http://localhost:8090/user/login",
         type: "post",
         contentType: "application/json",
         dataType: "json",
