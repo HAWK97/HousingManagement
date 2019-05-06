@@ -22,17 +22,6 @@ public class Constants {
     public static final String LOGIN = "login";
     public static final String LOGOUT = "logout";
 
-    //房屋状态
-    public static final Integer HOUSE_NORMAL = 1;       // 正常状态
-    public static final Integer HOUSE_DEL = 2;         // 删除
-    public static final Integer HOUSE_RENTED =3;        //出租
-
-
-    //邀请函状态
-    public static final Integer INVITATION_SEND = 1;  //已经发送状态 (未读)
-    public static final Integer INVITATION_READ = 2;  //已读状态
-
-
     public static final String Authorization = "Authorization";
     
     private static final String SPLIT = ":";

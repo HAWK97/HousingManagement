@@ -26,12 +26,13 @@ public class InvitationController {
 
     /**
      * 根据房屋id获取邀请
+     *
      * @param invitationSearchVo
      * @return
      */
     @LoginRequired
     @PostMapping("getInvitation")
-    public ResponseMessage getInvitation(InvitationSearchVo invitationSearchVo)  {
+    public ResponseMessage getInvitation(InvitationSearchVo invitationSearchVo) {
         try {
             return ResponseMessage.successMessage(invitationService.getInvitationBySearchVo(invitationSearchVo));
         } catch (ParseException e) {
@@ -42,20 +43,21 @@ public class InvitationController {
 
     /**
      * 发送邀请 需登陆
+     *
      * @param sellerId
      * @param houseId
      * @param time
      * @return
      */
-    @LoginRequired
-    @GetMapping("sendInvitation")
-    public ResponseMessage sendInvitation( Long sellerId, Long houseId, String time){
-        User user = UserHolder.get();
-        if (invitationService.sendInvitation(user.getId(), sellerId, houseId, time) == 1)
-            return ResponseMessage.successMessage();
-        else
-            return ResponseMessage.failedMessage();
-    }
+//    @LoginRequired
+//    @GetMapping("sendInvitation")
+//    public ResponseMessage sendInvitation(Long sellerId, Long houseId, String time) {
+//        User user = UserHolder.get();
+//        if (invitationService.sendInvitation(user.getId(), sellerId, houseId, time) == 1)
+//            return ResponseMessage.successMessage();
+//        else
+//            return ResponseMessage.failedMessage();
+//    }
 
 
 }

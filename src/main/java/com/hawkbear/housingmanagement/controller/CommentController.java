@@ -21,17 +21,17 @@ public class CommentController {
 
     @LoginRequired
     @PostMapping("/addComment")
-    public ResponseMessage addComment(String content,String houseId){
-       Long userId = UserHolder.get().getId();
-       commentService.addComment(content,userId,Long.valueOf(houseId));
-       return ResponseMessage.successMessage();
+    public ResponseMessage addComment(String content, String houseId) {
+        Long userId = UserHolder.get().getId();
+        commentService.addComment(content, userId, Long.valueOf(houseId));
+        return ResponseMessage.successMessage();
     }
 
     @LoginRequired
     @GetMapping("/getComment/{houseId}")
-    public ResponseMessage getComment(@PathVariable Long houseId){
+    public ResponseMessage getComment(@PathVariable Long houseId) {
         List<CommentDto> commentDtoList = commentService.findCommentByHouseId(houseId);
-        return  ResponseMessage.successMessage(commentDtoList);
+        return ResponseMessage.successMessage(commentDtoList);
     }
 
 }

@@ -44,7 +44,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         boolean isLoginRequired = isAnnotationPresent(method, LoginRequired.class);
         if (isLoginRequired) {
             String uri = request.getRequestURI();
-            String token = getToken(getAuthHeader(request));
+            String token = getAuthHeader(request);
             User user = clientService.getUser(token);
             if (user == null) {
                 // token无法获取到用户信息代表未登陆
@@ -72,15 +72,5 @@ public class LoginInterceptor implements HandlerInterceptor {
         String authHeader = request.getHeader(Constants.Authorization);
         log.info("authHeader：" + authHeader);
         return authHeader;
-    }
-
-    private String getToken(String authHeader) {
-        String token = "";
-        if (StringUtils.isEmpty(authHeader)) {
-            token = "45e9a34092333b04159f92a7df0cf18602243bd570f5c7227d6aba196f466831";
-        } else {
-            token = authHeader.split(" ")[1];
-        }
-        return token;
     }
 }

@@ -13,7 +13,10 @@ public enum ResultEnum {
     SYSTEM_ERROR(-999, "系统错误"),
 
     // 1开头为用户有关的错误
-    NEED_LOGIN(1001, "未登陆");
+    NEED_LOGIN(1001, "未登陆"),
+
+    // 2开头为图片有关的错误
+    IMAGE_FORMAT_ERROR(2001, "图片格式错误");
 
     @Getter
     private Integer code;

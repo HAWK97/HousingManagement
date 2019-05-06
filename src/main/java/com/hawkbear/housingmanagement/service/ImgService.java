@@ -1,8 +1,21 @@
 package com.hawkbear.housingmanagement.service;
 
-public interface ImgService {
+import com.hawkbear.housingmanagement.data.pojo.Img;
+import com.hawkbear.housingmanagement.mapper.ImgMapper;
+import org.springframework.stereotype.Service;
 
-    void addImgs(String[] imgs,Long houseId);
+import javax.annotation.Resource;
+import java.util.Date;
 
-    void addImg(String imgUrl,Long houseId);
+@Service
+public class ImgService {
+
+    @Resource
+    private ImgMapper imgMapper;
+
+    public void addImg(Img img) {
+        img.setCreateTime(new Date());
+        img.setUpdateTime(new Date());
+        imgMapper.insert(img);
+    }
 }

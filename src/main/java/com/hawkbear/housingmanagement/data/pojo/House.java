@@ -32,6 +32,8 @@ public class House {
 
     private Long seller;
 
+    private String introduce;
+
     private String description;
 
     /**
@@ -172,6 +174,20 @@ public class House {
      */
     public void setSeller(Long seller) {
         this.seller = seller;
+    }
+
+    /**
+     * @return introduce
+     */
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    /**
+     * @param introduce
+     */
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
     }
 
     /**

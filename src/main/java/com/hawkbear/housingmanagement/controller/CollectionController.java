@@ -23,12 +23,13 @@ public class CollectionController {
 
     /**
      * 添加收藏 需登陆
+     *
      * @param houseId
      * @return
      */
     @GetMapping("addColletion")
     @LoginRequired
-    public ResponseMessage addColletion(Long houseId){
+    public ResponseMessage addColletion(Long houseId) {
         User user = UserHolder.get();
         if (collectionService.addCollection(user.getId(), houseId) == 1)
             return ResponseMessage.successMessage();
