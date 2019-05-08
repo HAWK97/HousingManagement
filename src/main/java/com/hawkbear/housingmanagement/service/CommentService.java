@@ -35,7 +35,25 @@ public class CommentService {
         commentMapper.insert(comment);
     }
 
-    public PageInfo<CommentVo> getCommentVo(Long houseId, int page, int size) {
+
+    public PageInfo<CommentVo> getCommentVo(Long houseId, int page, int size){
+        Example example = new Example(Comment.class);
+        example.createCriteria().andEqualTo("houseId", houseId);
+        //总条数
+        int totalSize = commentMapper.selectCountByExample(example);
+        //总页数
+        int totalPage = totalSize%size == 0 ? totalSize/size : totalSize/size + 1;
+        if (page <= 0 ){
+            page = 1;
+        }
+        if (page > totalPage){
+            page = totalPage;
+        }
+        return getCommentVoHelper(houseId, page, size);
+    }
+
+
+    public PageInfo<CommentVo> getCommentVoHelper(Long houseId, int page, int size) {
         PageHelper.startPage(page, size);
         Example example = new Example(Comment.class);
         example.createCriteria().andEqualTo("houseId", houseId);
