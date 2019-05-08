@@ -16,4 +16,5 @@ public class CommentVo {
     private String profile;
 
     private Date date;
+
 }

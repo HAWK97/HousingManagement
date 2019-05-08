@@ -8,15 +8,15 @@ import com.hawkbear.housingmanagement.data.pojo.Img;
 import com.hawkbear.housingmanagement.data.vo.CommentVo;
 import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.mapper.CommentMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
+@Slf4j
 public class CommentService {
 
     @Resource
@@ -28,8 +28,8 @@ public class CommentService {
     @Resource
     private ImgService imgService;
 
-    public void addComment(String content,Long houseId) {
-        Comment  comment = new Comment();
+    public void addComment(String content, Long houseId) {
+        Comment comment = new Comment();
         comment.setContent(content);
         comment.setHouseId(houseId);
         comment.setCreateTime(new Date());
@@ -39,24 +39,27 @@ public class CommentService {
     }
 
 
-    public PageInfo<CommentVo> getCommentVo(Long houseId, int page, int size){
+    public Map getCommentVo(Long houseId, int page, int size) {
         Example example = new Example(Comment.class);
         example.createCriteria().andEqualTo("houseId", houseId);
         //总条数
         int totalSize = commentMapper.selectCountByExample(example);
+        log.info("总条数:{}", totalSize);
         //总页数
-        int totalPage = totalSize%size == 0 ? totalSize/size : totalSize/size + 1;
-        if (page <= 0 ){
+        int totalPage = totalSize % size == 0 ? totalSize / size : totalSize / size + 1;
+        log.info("总页数:{}", totalPage);
+        if (page <= 0) {
             page = 1;
         }
-        if (page > totalPage){
+        if (page > totalPage) {
             page = totalPage;
         }
+        log.info("修正page参数:{}", page);
         return getCommentVoHelper(houseId, page, size);
     }
 
 
-    public PageInfo<CommentVo> getCommentVoHelper(Long houseId, int page, int size) {
+    public Map getCommentVoHelper(Long houseId, int page, int size) {
         PageHelper.startPage(page, size);
         Example example = new Example(Comment.class);
         example.createCriteria().andEqualTo("houseId", houseId);
@@ -76,6 +79,11 @@ public class CommentService {
             }
             commentVoList.add(commentVo);
         }
-        return new PageInfo<>(commentVoList);
+        Map res = new HashMap();
+        res.put("commentList",commentVoList);
+        PageInfo<Comment> pageInfo = new PageInfo<>(commentList);
+        res.put("currentPage",pageInfo.getPageNum());
+        res.put("totalPage",pageInfo.getPages());
+        return res;
     }
 }
