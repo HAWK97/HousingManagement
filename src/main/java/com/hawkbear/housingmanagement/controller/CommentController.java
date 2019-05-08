@@ -2,10 +2,8 @@ package com.hawkbear.housingmanagement.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.annotation.LoginRequired;
-import com.hawkbear.housingmanagement.data.pojo.Comment;
 import com.hawkbear.housingmanagement.data.vo.CommentVo;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
-import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.service.CommentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +20,10 @@ public class CommentController {
     private CommentService commentService;
 
     @ApiOperation(value = "新增评论", notes = "需要传入评论内容与房屋id")
-    @PostMapping
+    @PostMapping("/add/{houseId}")
     @LoginRequired
-    public ResponseMessage addComment(@RequestBody Comment comment) {
-        commentService.addComment(comment);
+    public ResponseMessage addComment(@PathVariable Long houseId,@RequestParam String content) {
+        commentService.addComment(content,houseId);
         return ResponseMessage.successMessage();
     }
 

@@ -28,7 +28,10 @@ public class CommentService {
     @Resource
     private ImgService imgService;
 
-    public void addComment(Comment comment) {
+    public void addComment(String content,Long houseId) {
+        Comment  comment = new Comment();
+        comment.setContent(content);
+        comment.setHouseId(houseId);
         comment.setCreateTime(new Date());
         comment.setUpdateTime(new Date());
         comment.setUserId(UserHolder.get().getId());

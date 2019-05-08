@@ -1,7 +1,8 @@
 package com.hawkbear.housingmanagement.data.pojo;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.util.Date;
-import javax.persistence.*;
 
 public class Comment {
     @Id
