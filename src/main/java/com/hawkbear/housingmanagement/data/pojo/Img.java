@@ -18,6 +18,9 @@ public class Img {
     @Column(name = "house_id")
     private Long houseId;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -89,6 +92,20 @@ public class Img {
      */
     public void setHouseId(Long houseId) {
         this.houseId = houseId;
+    }
+
+    /**
+     * @return user_id
+     */
+    public Long getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId
+     */
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**

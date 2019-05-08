@@ -1,12 +1,15 @@
 package com.hawkbear.housingmanagement.service;
 
-import com.hawkbear.housingmanagement.data.dto.CommentDto;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hawkbear.housingmanagement.data.dto.User;
 import com.hawkbear.housingmanagement.data.pojo.Comment;
+import com.hawkbear.housingmanagement.data.pojo.Img;
+import com.hawkbear.housingmanagement.data.vo.CommentVo;
+import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.mapper.CommentMapper;
-import com.hawkbear.housingmanagement.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -19,38 +22,39 @@ public class CommentService {
     @Resource
     private CommentMapper commentMapper;
 
-    @Autowired
+    @Resource
     private ClientService clientService;
 
-    public void addComment(String content, Long userId, Long houseId) {
-        Comment comment = new Comment();
-        comment.setContent(content);
+    @Resource
+    private ImgService imgService;
+
+    public void addComment(Comment comment) {
         comment.setCreateTime(new Date());
-        comment.setHouseId(houseId);
         comment.setUpdateTime(new Date());
-        comment.setUserId(userId);
+        comment.setUserId(UserHolder.get().getId());
         commentMapper.insert(comment);
     }
 
-    /**
-     * 根据房子id返回评论列表
-     * @param houseId
-     * @return
-     */
-    public List<CommentDto> findCommentByHouseId(Long houseId) {
-        Comment condition = new Comment();
-        condition.setHouseId(houseId);
-        List<Comment> commentList = commentMapper.select(condition);
-        List<CommentDto> commentDtoList = new ArrayList<>(commentList.size());
-        for (Comment comment : commentList){
+    public PageInfo<CommentVo> getCommentVo(Long houseId, int page, int size) {
+        PageHelper.startPage(page, size);
+        Example example = new Example(Comment.class);
+        example.createCriteria().andEqualTo("houseId", houseId);
+        List<Comment> commentList = commentMapper.selectByExample(example);
+        List<CommentVo> commentVoList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            CommentVo commentVo = new CommentVo();
+            commentVo.setContent(comment.getContent());
+            commentVo.setDate(comment.getCreateTime());
             User user = clientService.getUser(comment.getUserId());
-            CommentDto commentDto = new CommentDto();
-            //TODO 用户头像
-            commentDto.setUserProfile("../../img/test_house.jpg");
-            commentDto.setComment(comment);
-            commentDto.setNickname(user.getNickname());
-            commentDtoList.add(commentDto);
+            commentVo.setUsername(user.getNickname());
+            Img profile = imgService.findImgByUserId(user.getId());
+            if (null == profile) {
+                commentVo.setProfile("http://cdn.stalary.com/2e8512a721.png");
+            } else {
+                commentVo.setProfile(profile.getImageUrl());
+            }
+            commentVoList.add(commentVo);
         }
-        return commentDtoList;
+        return new PageInfo<>(commentVoList);
     }
 }

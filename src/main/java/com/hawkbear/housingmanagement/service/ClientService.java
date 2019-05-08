@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hawkbear.housingmanagement.client.UserCenterClient;
 import com.hawkbear.housingmanagement.data.dto.ProjectInfo;
 import com.hawkbear.housingmanagement.data.dto.User;
+import com.hawkbear.housingmanagement.data.pojo.Img;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
 import com.hawkbear.housingmanagement.exception.MyException;
 import com.hawkbear.housingmanagement.holder.ProjectHolder;
@@ -16,6 +17,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * ClientService
@@ -29,6 +31,9 @@ public class ClientService {
 
     @Resource(name = "stringRedisTemplate")
     private StringRedisTemplate template;
+
+    @Resource
+    private ImgService imgService;
 
     @Autowired
     private UserCenterClient client;
@@ -57,11 +62,22 @@ public class ClientService {
             response = client.register(projectInfo.getKey(), user);
         } else if (Constants.LOGIN.equals(type)) {
             response = client.login(projectInfo.getKey(), user);
+        } else if (Constants.UPDATE.equals(type)) {
+            response = client.updateInfo(projectInfo.getKey(), user);
         } else {
             log.warn("postUser type " + type + " error");
         }
         if (response.isSuccess()) {
-            getUser(response.getData());
+            User cachedUser = getUser(response.getData());
+            // 注册时设置默认头像
+            if (Constants.REGISTER.equals(type)) {
+                Img img = new Img();
+                img.setImageUrl("http://cdn.stalary.com/2e8512a721.png");
+                img.setUserId(cachedUser.getId());
+                img.setCreateTime(new Date());
+                img.setUpdateTime(new Date());
+                imgService.addImg(img);
+            }
         } else {
             throw new MyException(response.getCode(), response.getMsg());
         }

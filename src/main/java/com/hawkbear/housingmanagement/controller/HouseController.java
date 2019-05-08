@@ -16,18 +16,18 @@ public class HouseController {
     @Resource
     private HouseService houseService;
 
-    @LoginRequired
     @PostMapping
+    @LoginRequired
     public ResponseMessage addHouse(House house, MultipartFile img, MultipartFile[] imgList) {
         houseService.addHouse(house, img, imgList);
         return ResponseMessage.successMessage();
     }
 
+    @GetMapping("/{houseId}")
+    public ResponseMessage findHouseById(@PathVariable("houseId") Long houseId) {
+        return ResponseMessage.successMessage(houseService.getHouseVo(houseId));
+    }
 
-//    @GetMapping("/toHouseDetail/{id}")
-//    public ResponseMessage findHouseById(@PathVariable("id") long houseId) {
-//        return ResponseMessage.successMessage(houseService.findHouseDetail(houseId));
-//    }
 //    @PostMapping("/findHouseBySearchVo")
 //    public ResponseMessage<PageInfo<House>> findHouseBySearchVo(@RequestParam(required = false, defaultValue = "1") int page,
 //                                                                @RequestParam(required = false, defaultValue = "10") int size,

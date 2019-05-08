@@ -55,6 +55,18 @@ public interface UserCenterClient {
             @RequestBody User user);
 
     /**
+     * 更新用户信息
+     *
+     * @param key 项目密钥
+     * @param user 用户信息
+     * @return 用户 token
+     */
+    @PostMapping("/token/update")
+    ResponseMessage<String> updateInfo(
+            @RequestParam(name = "key") String key,
+            @RequestBody User user);
+
+    /**
      * 获取用户信息
      *
      * @param token 用户 token

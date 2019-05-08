@@ -2,6 +2,7 @@ package com.hawkbear.housingmanagement.service;
 
 import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.data.pojo.Img;
+import com.hawkbear.housingmanagement.data.vo.HouseVo;
 import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.mapper.HouseMapper;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HouseService {
@@ -21,6 +24,9 @@ public class HouseService {
 
     @Resource
     private QiniuService qiniuService;
+
+    @Resource
+    private ClientService clientService;
 
     public void addHouse(House house, MultipartFile img, MultipartFile[] imgList) {
         house.setCreateTime(new Date());
@@ -37,6 +43,24 @@ public class HouseService {
             image.setImageUrl(imgUrl);
             imgService.addImg(image);
         }
+    }
+
+    public HouseVo getHouseVo(Long houseId) {
+        HouseVo houseVo = new HouseVo();
+        House house = houseMapper.selectByPrimaryKey(houseId);
+        houseVo.setHouse(house);
+        Long sellerId = house.getSeller();
+        houseVo.setUser(clientService.getUser(sellerId));
+        Img profile = imgService.findImgByUserId(sellerId);
+        if (null == profile) {
+            houseVo.setProfile("http://cdn.stalary.com/2e8512a721.png");
+        } else {
+            houseVo.setProfile(profile.getImageUrl());
+        }
+        List<Img> imgList = imgService.findImgsByHouseId(houseId);
+        List<String> imgUrlList = imgList.stream().map(Img::getImageUrl).collect(Collectors.toList());
+        houseVo.setImgList(imgUrlList);
+        return houseVo;
     }
 
 //    public PageInfo<House> findAllHouseByPage(int page, int size, SearchDto searchDto) {
@@ -66,32 +90,6 @@ public class HouseService {
 //        List<House> houseList = houseMapper.selectByExample(example);
 //        PageInfo<House> pageInfo = new PageInfo<>(houseList);
 //        return pageInfo;
-//    }
-
-    /**
-     * 根据房子id获取房屋信息
-     * @param houseId
-     * @return
-     */
-//    public HouseDto findHouseDetail(Long houseId) {
-//        HouseDto houseDto = new HouseDto();
-//        House house = houseMapper.selectByPrimaryKey(houseId);
-//        User user = clientService.getUser(house.getSeller());
-//        houseDto.setHouse(house);
-//        houseDto.setSellerPhoneNum(user.getPhone());
-//        houseDto.setTitleImg(house.getTypeImage());
-//        Example example = new Example(Img.class);
-//        example.createCriteria().andEqualTo("id",house.getId());
-//        List<Img> imgList = imgMapper.selectByExample(example);
-//        List<String> stringList = new ArrayList<>();
-//        for (Img img:imgList)
-//            stringList.add(img.getImageUrl());
-//        houseDto.setImgList(stringList);
-//        houseDto.setSellerName(user.getNickname());
-//        houseDto.setSellerId(user.getId());
-//        //TODO   用户头像
-//        houseDto.setUserProfile("../../img/test_house.jpg");
-//        return houseDto;
 //    }
 
 //    public PageInfo<House> findAllNormalHouseByPage(int page, int size) {

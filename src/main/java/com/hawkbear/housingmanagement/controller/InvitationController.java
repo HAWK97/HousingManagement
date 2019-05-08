@@ -1,10 +1,7 @@
 package com.hawkbear.housingmanagement.controller;
 
 import com.hawkbear.housingmanagement.annotation.LoginRequired;
-import com.hawkbear.housingmanagement.data.dto.User;
-import com.hawkbear.housingmanagement.data.vo.InvitationSearchVo;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
-import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.service.ClientService;
 import com.hawkbear.housingmanagement.service.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +27,15 @@ public class InvitationController {
      * @param invitationSearchVo
      * @return
      */
-    @LoginRequired
-    @PostMapping("getInvitation")
-    public ResponseMessage getInvitation(InvitationSearchVo invitationSearchVo) {
-        try {
-            return ResponseMessage.successMessage(invitationService.getInvitationBySearchVo(invitationSearchVo));
-        } catch (ParseException e) {
-            return ResponseMessage.failedMessage("传来日期格式有误");
-        }
-    }
+//    @LoginRequired
+//    @PostMapping("getInvitation")
+//    public ResponseMessage getInvitation(InvitationSearchVo invitationSearchVo) {
+//        try {
+//            return ResponseMessage.successMessage(invitationService.getInvitationBySearchVo(invitationSearchVo));
+//        } catch (ParseException e) {
+//            return ResponseMessage.failedMessage("传来日期格式有误");
+//        }
+//    }
 
 
     /**
