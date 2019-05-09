@@ -39,6 +39,15 @@ public class UserController {
         return clientService.postUser(loginUser, Constants.LOGIN);
     }
 
+    @ApiOperation(value = "用户登出")
+    @GetMapping("/logout")
+    @LoginRequired
+    public ResponseMessage logout() {
+        User user = UserHolder.get();
+        // 在拦截器中进行删除操作
+        return ResponseMessage.successMessage(user.getRole());
+    }
+
     @ApiOperation(value = "更新用户信息", notes = "需要传入...待写，特别注意：更新之后返回新的token，需要覆盖localstorage里的旧token")
     @PostMapping("/update")
     public ResponseMessage update(@RequestBody User user, MultipartFile profile) {

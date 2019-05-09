@@ -74,6 +74,7 @@ public class QiniuService {
                 Response response = uploadManager.put(image.getBytes(), imageName, getUpToken());
                 if (response.isOK() && response.isJson()) {
                     log.info("七牛云上传图片成功：" + response.bodyString());
+                    return;
                 }
                 log.error("七牛云上传图片失败：" + response.bodyString());
             } catch (QiniuException e) {

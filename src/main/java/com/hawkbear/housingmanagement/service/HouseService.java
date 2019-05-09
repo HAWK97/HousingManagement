@@ -28,9 +28,12 @@ public class HouseService {
     @Resource
     private ClientService clientService;
 
-    public void addHouse(House house, MultipartFile img, MultipartFile[] imgList) {
+    public void addHouse(House house, String province, String city, String distribution, MultipartFile img, MultipartFile[] imgList) {
         house.setCreateTime(new Date());
         house.setUpdateTime(new Date());
+        String oldAddress = house.getAddress();
+        String newAddress = province + city + distribution + " " + oldAddress;
+        house.setAddress(newAddress);
         String typeImage = qiniuService.upload(img);
         house.setTypeImage(typeImage);
         house.setSeller(UserHolder.get().getId());

@@ -38,8 +38,7 @@ public class CommentService {
         commentMapper.insert(comment);
     }
 
-
-    public Map getCommentVo(Long houseId, int page, int size) {
+    public Map<String, Object> getCommentVo(Long houseId, int page, int size) {
         Example example = new Example(Comment.class);
         example.createCriteria().andEqualTo("houseId", houseId);
         //总条数
@@ -58,8 +57,7 @@ public class CommentService {
         return getCommentVoHelper(houseId, page, size);
     }
 
-
-    public Map getCommentVoHelper(Long houseId, int page, int size) {
+    private Map<String, Object> getCommentVoHelper(Long houseId, int page, int size) {
         PageHelper.startPage(page, size);
         Example example = new Example(Comment.class);
         example.createCriteria().andEqualTo("houseId", houseId);
@@ -79,11 +77,11 @@ public class CommentService {
             }
             commentVoList.add(commentVo);
         }
-        Map res = new HashMap();
-        res.put("commentList",commentVoList);
+        Map<String, Object> res = new HashMap<>();
+        res.put("commentList", commentVoList);
         PageInfo<Comment> pageInfo = new PageInfo<>(commentList);
-        res.put("currentPage",pageInfo.getPageNum());
-        res.put("totalPage",pageInfo.getPages());
+        res.put("currentPage", pageInfo.getPageNum());
+        res.put("totalPage", pageInfo.getPages());
         return res;
     }
 }

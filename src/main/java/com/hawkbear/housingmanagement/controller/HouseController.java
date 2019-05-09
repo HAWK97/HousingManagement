@@ -18,8 +18,8 @@ public class HouseController {
 
     @PostMapping
     @LoginRequired
-    public ResponseMessage addHouse(House house, MultipartFile img, MultipartFile[] imgList) {
-        houseService.addHouse(house, img, imgList);
+    public ResponseMessage addHouse(House house, String province, String city, String distribution, MultipartFile img, MultipartFile[] imgList) {
+        houseService.addHouse(house, province, city, distribution, img, imgList);
         return ResponseMessage.successMessage();
     }
 
