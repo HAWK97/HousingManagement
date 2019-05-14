@@ -43,17 +43,17 @@ public class CommentService {
         example.createCriteria().andEqualTo("houseId", houseId);
         //总条数
         int totalSize = commentMapper.selectCountByExample(example);
-        log.info("总条数:{}", totalSize);
+        log.info("评论总条数:{}", totalSize);
         //总页数
         int totalPage = totalSize % size == 0 ? totalSize / size : totalSize / size + 1;
-        log.info("总页数:{}", totalPage);
+        log.info("评论总页数:{}", totalPage);
         if (page <= 0) {
             page = 1;
         }
         if (page > totalPage) {
             page = totalPage;
         }
-        log.info("修正page参数:{}", page);
+        log.info("修正评论page参数:{}", page);
         return getCommentVoHelper(houseId, page, size);
     }
 
@@ -71,9 +71,9 @@ public class CommentService {
             commentVo.setUsername(user.getNickname());
             Img profile = imgService.findImgByUserId(user.getId());
             if (null == profile) {
-                commentVo.setProfile("http://cdn.stalary.com/2e8512a721.png");
+                commentVo.setProfile("http://cdn.stalary.com/2e8512a721.png?imageView2/2/w/60/h/60");
             } else {
-                commentVo.setProfile(profile.getImageUrl());
+                commentVo.setProfile(profile.getImageUrl() + "?imageView2/2/w/60/h/60");
             }
             commentVoList.add(commentVo);
         }

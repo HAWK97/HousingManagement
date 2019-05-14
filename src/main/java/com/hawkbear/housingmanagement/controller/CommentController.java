@@ -15,12 +15,12 @@ public class CommentController {
     @Resource
     private CommentService commentService;
 
-    @ApiOperation(value = "新增评论", notes = "需要传入评论内容与房屋id")
+    @ApiOperation(value = "添加评论", notes = "需要传入评论内容与房屋id")
     @PostMapping("/add/{houseId}")
     @LoginRequired
     public ResponseMessage addComment(@PathVariable Long houseId,@RequestParam String content) {
         commentService.addComment(content,houseId);
-        return ResponseMessage.successMessage();
+        return ResponseMessage.successMessage("添加评论成功");
     }
 
     @ApiOperation(value = "获取评论列表", notes = "需要传入房屋id，显示页数与每页大小")

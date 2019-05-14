@@ -1,74 +1,132 @@
 package com.hawkbear.housingmanagement.service;
 
+import com.github.pagehelper.PageHelper;
 import com.hawkbear.housingmanagement.data.dto.User;
+import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.data.pojo.Invitation;
+import com.hawkbear.housingmanagement.data.vo.InvitationVo;
+import com.hawkbear.housingmanagement.holder.UserHolder;
 import com.hawkbear.housingmanagement.mapper.InvitationMapper;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
+@Slf4j
 public class InvitationService {
 
     @Resource
     private InvitationMapper invitationMapper;
 
-    @Autowired
+    @Resource
+    private HouseService houseService;
+
+    @Resource
     private ClientService clientService;
 
-//    public int sendInvitation(Long userId, Long sellerId, Long houseId, String time) {
-//        Invitation invitation = new Invitation();
-//        invitation.setCreateTime(new Date());
-//        invitation.setHouseId(houseId);
-//        invitation.setInvitationTime(time);
-//        invitation.setSellerId(sellerId);
-//        invitation.setUpdateTime(new Date());
-//        invitation.setUserId(userId);
-//        invitation.setStatus(Constants.INVITATION_SEND);
-//        int num = invitationMapper.insert(invitation);
-//        return  num;
-//    }
+    public boolean addInvitation(Long houseId) {
+        Example example = new Example(Invitation.class);
+        example.createCriteria().andEqualTo("houseId", houseId)
+               .andEqualTo("userId", UserHolder.get().getId());
+        Invitation invitation = invitationMapper.selectOneByExample(example);
+        if (invitation == null) {
+            invitation = new Invitation();
+            invitation.setCreateTime(new Date());
+            invitation.setUpdateTime(new Date());
+            invitation.setUserId(UserHolder.get().getId());
+            invitation.setHouseId(houseId);
+            Long sellerId = houseService.findHouseById(houseId).getSeller();
+            invitation.setSellerId(sellerId);
+            invitationMapper.insert(invitation);
+            return true;
+        }
+        return false;
+    }
 
-    /**
-     * 多条件查询用户邀请函信息
-     * @param searchVo
-     * @return
-     * @throws ParseException
-     */
-//    public List<InvitationDto> getInvitationBySearchVo(InvitationSearchVo searchVo) throws ParseException {
-//        Example example = new Example(Invitation.class);
-//        if (StringUtils.isNotBlank(searchVo.getHouseId())){
-//            example.createCriteria().andEqualTo("house_id",Integer.valueOf(searchVo.getHouseId()));
-//        }
-//        if (StringUtils.isNotBlank(searchVo.getSellerId())){
-//            example.createCriteria().andEqualTo("seller_id",Integer.valueOf(searchVo.getSellerId()));
-//        }
-//        if (StringUtils.isNotBlank(searchVo.getStatus())){
-//            example.createCriteria().andEqualTo("status",Integer.valueOf(searchVo.getStatus()));
-//        }
-//        if (StringUtils.isNotBlank(searchVo.getCreateDateTime())){
-//            example.createCriteria().andEqualTo("create_time",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(searchVo.getCreateDateTime()));
-//        }
-//        List<Invitation> invitationList = invitationMapper.selectByExample(example);
-//        List<InvitationDto> res = new ArrayList<>();
-//        for (Invitation invitation : invitationList){
-//            InvitationDto invitationDto = new InvitationDto();
-//            invitationDto.setId(invitation.getId());
-//            invitationDto.setInvitationTime(invitation.getCreateTime());
-//            invitationDto.setStatus(invitation.getStatus());
-//            User user = clientService.getUser(invitation.getUserId());
-//            invitationDto.setNickName(user.getNickname());
-//            invitationDto.setPhone(user.getPhone());
-//            res.add(invitationDto);
-//        }
-//        return  res;
-//    }
+    public List<Invitation> findInvitationsByHouseId(Long houseId) {
+        Example example = new Example(Invitation.class);
+        example.createCriteria().andEqualTo("houseId", houseId);
+        return invitationMapper.selectByExample(example);
+    }
 
+    public Map<String, Object> getBuyerInvitationList(int page, int size) {
+        PageHelper.startPage(page, size);
+        Example example = new Example(Invitation.class);
+        example.createCriteria().andEqualTo("userId", UserHolder.get().getId());
+        List<Invitation> invitationList = invitationMapper.selectByExample(example);
+        List<InvitationVo> invitationVoList = new ArrayList<>();
+        for (Invitation invitation : invitationList) {
+            InvitationVo invitationVo = new InvitationVo();
+            invitationVo.setHouseId(invitation.getHouseId());
+            House house = houseService.findHouseById(invitation.getHouseId());
+            invitationVo.setIntroduce(house.getIntroduce());
+            invitationVo.setAddress(house.getAddress());
+            User seller = clientService.getUser(invitation.getSellerId());
+            invitationVo.setSeller(seller.getNickname());
+            invitationVo.setSellerPhone(seller.getPhone());
+            invitationVoList.add(invitationVo);
+        }
+        //总条数
+        int totalSize = invitationMapper.selectCountByExample(example);
+        log.info("买家邀约总条数:{}", totalSize);
+        //总页数
+        int totalPage = totalSize % size == 0 ? totalSize / size : totalSize / size + 1;
+        log.info("买家邀约总页数:{}", totalPage);
+        if (page <= 0) {
+            page = 1;
+        }
+        if (page > totalPage) {
+            page = totalPage;
+        }
+        log.info("修正买家邀约page参数:{}", page);
+        Map<String, Object> res = new HashMap<>();
+        res.put("invitationList", invitationVoList);
+        res.put("currentPage", page);
+        return res;
+    }
+
+    public Map<String, Object> getSellerInvitationList(int page, int size) {
+        PageHelper.startPage(page, size);
+        Example example = new Example(Invitation.class);
+        example.createCriteria().andEqualTo("sellerId", UserHolder.get().getId());
+        List<Invitation> invitationList = invitationMapper.selectByExample(example);
+        List<InvitationVo> invitationVoList = new ArrayList<>();
+        for (Invitation invitation : invitationList) {
+            InvitationVo invitationVo = new InvitationVo();
+            invitationVo.setHouseId(invitation.getHouseId());
+            House house = houseService.findHouseById(invitation.getHouseId());
+            invitationVo.setIntroduce(house.getIntroduce());
+            invitationVo.setAddress(house.getAddress());
+            User buyer = clientService.getUser(invitation.getUserId());
+            invitationVo.setBuyer(buyer.getNickname());
+            invitationVo.setBuyerPhone(buyer.getPhone());
+            invitationVoList.add(invitationVo);
+        }
+        //总条数
+        int totalSize = invitationMapper.selectCountByExample(example);
+        log.info("卖家邀约总条数:{}", totalSize);
+        //总页数
+        int totalPage = totalSize % size == 0 ? totalSize / size : totalSize / size + 1;
+        log.info("卖家邀约总页数:{}", totalPage);
+        if (page <= 0) {
+            page = 1;
+        }
+        if (page > totalPage) {
+            page = totalPage;
+        }
+        log.info("修正卖家邀约page参数:{}", page);
+        Map<String, Object> res = new HashMap<>();
+        res.put("invitationList", invitationVoList);
+        res.put("currentPage", page);
+        return res;
+    }
+
+    public void deleteInvitation(Long houseId) {
+        Example example = new Example(Invitation.class);
+        example.createCriteria().andEqualTo("houseId", houseId);
+        invitationMapper.deleteByExample(example);
+    }
 }

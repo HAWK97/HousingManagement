@@ -24,9 +24,6 @@ public class Invitation {
     @Column(name = "seller_id")
     private Long sellerId;
 
-    @Column(name = "invitation_time")
-    private String invitationTime;
-
     /**
      * @return id
      */
@@ -123,19 +120,5 @@ public class Invitation {
      */
     public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
-    }
-
-    /**
-     * @return invitation_time
-     */
-    public String getInvitationTime() {
-        return invitationTime;
-    }
-
-    /**
-     * @param invitationTime
-     */
-    public void setInvitationTime(String invitationTime) {
-        this.invitationTime = invitationTime;
     }
 }

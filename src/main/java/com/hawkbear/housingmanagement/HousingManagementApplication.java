@@ -6,8 +6,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import tk.mybatis.spring.annotation.MapperScan;
 
-
-
 @SpringBootApplication
 @EnableFeignClients
 @MapperScan(basePackages = {"com.hawkbear.housingmanagement.mapper"})
@@ -17,6 +15,4 @@ public class HousingManagementApplication {
     public static void main(String[] args) {
         SpringApplication.run(HousingManagementApplication.class, args);
     }
-
 }
-

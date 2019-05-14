@@ -28,7 +28,6 @@
         <javaClientGenerator targetPackage="com.hawkbear.housingmanagement.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-
         <table tableName="collection">
         </table>
         <table tableName="comment">

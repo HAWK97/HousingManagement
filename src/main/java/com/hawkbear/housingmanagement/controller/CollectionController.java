@@ -1,40 +1,41 @@
 package com.hawkbear.housingmanagement.controller;
 
 import com.hawkbear.housingmanagement.annotation.LoginRequired;
-import com.hawkbear.housingmanagement.data.dto.User;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
-import com.hawkbear.housingmanagement.holder.UserHolder;
-import com.hawkbear.housingmanagement.service.ClientService;
 import com.hawkbear.housingmanagement.service.CollectionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("collection")
 public class CollectionController {
 
-    @Autowired
+    @Resource
     private CollectionService collectionService;
 
-    @Autowired
-    private ClientService clientService;
-
-    /**
-     * 添加收藏 需登陆
-     *
-     * @param houseId
-     * @return
-     */
-    @GetMapping("addColletion")
+    @PostMapping("/{houseId}")
     @LoginRequired
-    public ResponseMessage addColletion(Long houseId) {
-        User user = UserHolder.get();
-        if (collectionService.addCollection(user.getId(), houseId) == 1)
-            return ResponseMessage.successMessage();
-        else
-            return ResponseMessage.failedMessage();
+    public ResponseMessage addCollection(@PathVariable Long houseId) {
+        boolean result = collectionService.addCollection(houseId);
+        if (result) {
+            return ResponseMessage.successMessage("添加收藏成功");
+        }
+        return ResponseMessage.successMessage("该房屋已收藏");
     }
 
+    @GetMapping
+    @LoginRequired
+    public ResponseMessage getCollectionList(
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+        return ResponseMessage.successMessage(collectionService.getCollectionList(page, size));
+    }
+
+    @PostMapping("/delete/{houseId}")
+    @LoginRequired
+    public ResponseMessage deleteCollection(@PathVariable Long houseId) {
+        collectionService.deleteCollection(houseId);
+        return ResponseMessage.successMessage("删除收藏成功");
+    }
 }

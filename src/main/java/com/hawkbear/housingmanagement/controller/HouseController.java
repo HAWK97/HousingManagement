@@ -1,6 +1,7 @@
 package com.hawkbear.housingmanagement.controller;
 
 import com.hawkbear.housingmanagement.annotation.LoginRequired;
+import com.hawkbear.housingmanagement.data.dto.HouseSearchDto;
 import com.hawkbear.housingmanagement.data.pojo.House;
 import com.hawkbear.housingmanagement.data.vo.ResponseMessage;
 import com.hawkbear.housingmanagement.service.HouseService;
@@ -20,7 +21,14 @@ public class HouseController {
     @LoginRequired
     public ResponseMessage addHouse(House house, String province, String city, String distribution, MultipartFile img, MultipartFile[] imgList) {
         houseService.addHouse(house, province, city, distribution, img, imgList);
-        return ResponseMessage.successMessage();
+        return ResponseMessage.successMessage("添加房屋成功");
+    }
+
+    @GetMapping
+    @LoginRequired
+    public ResponseMessage getHouseList(@RequestParam(required = false, defaultValue = "1") int page,
+                                        @RequestParam(required = false, defaultValue = "10") int size) {
+        return ResponseMessage.successMessage(houseService.getHouseList(page, size));
     }
 
     @GetMapping("/{houseId}")
@@ -28,19 +36,19 @@ public class HouseController {
         return ResponseMessage.successMessage(houseService.getHouseVo(houseId));
     }
 
-//    @PostMapping("/findHouseBySearchVo")
-//    public ResponseMessage<PageInfo<House>> findHouseBySearchVo(@RequestParam(required = false, defaultValue = "1") int page,
-//                                                                @RequestParam(required = false, defaultValue = "10") int size,
-//                                                                SearchVo searchVo) {
-//        SearchDto searchDto = getStandardSearchVo(searchVo);
-//        PageInfo<House> pageInfo = houseService.findAllHouseByPage(page, size, searchDto);
-//        return ResponseMessage.successMessage(pageInfo);
-//    }
+    @PostMapping("/houseList")
+    public ResponseMessage search(HouseSearchDto houseSearchDto,
+                                  @RequestParam(required = false, defaultValue = "1") int page,
+                                  @RequestParam(required = false, defaultValue = "10") int size) {
+        return ResponseMessage.successMessage(houseService.search(houseSearchDto, page, size));
+    }
 
-//    @GetMapping("findAllNormalHouse")
-//    public ResponseMessage<PageInfo<House>> findAllNormalHouse(@RequestParam(required = false, defaultValue = "1") int page,
-//                                                               @RequestParam(required = false, defaultValue = "10") int size) {
-//        PageInfo<House> pageInfo = houseService.findAllNormalHouseByPage(page, size);
-//        return ResponseMessage.successMessage(pageInfo);
-//    }
+    @PostMapping("/delete/{houseId}")
+    public ResponseMessage deleteHouse(@PathVariable("houseId") Long houseId) {
+        boolean result = houseService.deleteHouse(houseId);
+        if (result) {
+            return ResponseMessage.successMessage("删除房屋成功");
+        }
+        return ResponseMessage.failedMessage("存在与该房屋关联的邀约");
+    }
 }

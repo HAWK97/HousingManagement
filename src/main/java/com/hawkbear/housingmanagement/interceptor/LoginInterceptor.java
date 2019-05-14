@@ -45,11 +45,11 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (isLoginRequired) {
             String uri = request.getRequestURI();
             String token = getAuthHeader(request);
-            User user = clientService.getUser(token);
-            if (user == null) {
+            if (StringUtils.isEmpty(token)) {
                 // token无法获取到用户信息代表未登陆
                 throw new MyException(ResultEnum.NEED_LOGIN);
             }
+            clientService.getUser(token);
             // 退出时删除缓存
             if (uri.contains(Constants.LOGOUT)) {
                 template.delete(Constants.getRedisKey(Constants.REDIS_USER_TOKEN, token));
